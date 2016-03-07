@@ -318,8 +318,7 @@ bool TutorialApplication::frameRenderingQueued(const Ogre::FrameEvent& fe)
  
 void getTerrainImage(bool flipX, bool flipY, Ogre::Image& img)
 {
-  img.load("flat.bmp", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
- 
+  img.load("terrain.png",Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
   if (flipX)
     img.flipAroundY();
   if (flipY)
