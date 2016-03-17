@@ -1,45 +1,50 @@
-﻿Build started 3/6/2016 9:14:06 PM.
-     1>Project "C:\Users\Aaron Yerman\Downloads\College\Major\Game Engines\GESVN\FinalProject\iteration0\Project0\Project1\Project1.vcxproj" on node 2 (Build target(s)).
+﻿Build started 3/17/2016 6:18:43 PM.
+     1>Project "C:\Users\Patrick\Documents\GitHub\gameEngineConcepts\Project0\Project1\Project1.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\OgreMain\Build9/include/OGRE/Overlay /IC:\OgreMain\Build9/include/OGRE /IC:\OgreMain\boost_1_60_0 /IC:\OgreMain\Build9/include/OIS /IC:\OgreMain\Build9/include /I"C:\OgreMain\bullet-2.82\src\/BulletCollision/CollisionShapes" /I"C:\OgreMain\bullet-2.82\src\\" /I"C:\OgreMain\bullet-2.82\src\/LinearMath" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Tutorial3.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\Patrick\Desktop\ogreBase\Build9/include/OGRE/Overlay /IC:\Users\Patrick\Desktop\ogreBase\Build9/include/OGRE /IC:\Users\Patrick\Desktop\ogreBase\boost_1_60_0 /IC:\Users\Patrick\Desktop\ogreBase\Build9/include/OIS /IC:\Users\Patrick\Desktop\ogreBase\Build9/include /I"C:\Users\Patrick\Desktop\ogreBase\bullet-2.82\src\/BulletCollision/CollisionShapes" /I"C:\Users\Patrick\Desktop\ogreBase\bullet-2.82\src\\" /I"C:\Users\Patrick\Desktop\ogreBase\bullet-2.82\src\/LinearMath" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Tutorial3.cpp
          Tutorial3.cpp
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(67): warning C4316: 'MyMotionState' : object allocated on the heap may not be aligned 16
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(146): warning C4305: 'argument' : truncation from 'double' to 'const btScalar'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(158): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(159): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(160): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(161): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(162): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(163): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(164): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(165): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(166): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(167): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(168): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(169): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(170): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(171): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(172): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(173): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(174): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(175): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(176): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(177): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(196): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(207): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(209): warning C4305: 'argument' : truncation from 'double' to 'const Ogre::Real'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(216): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\aaron yerman\downloads\college\major\game engines\gesvn\finalproject\iteration0\project0\tutorial3.cpp(219): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(67): warning C4316: 'MyMotionState' : object allocated on the heap may not be aligned 16
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(146): warning C4305: 'argument' : truncation from 'double' to 'const btScalar'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(147): warning C4305: 'argument' : truncation from 'double' to 'const btScalar'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(148): warning C4305: 'argument' : truncation from 'double' to 'const btScalar'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(149): warning C4305: 'argument' : truncation from 'double' to 'const btScalar'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(150): warning C4305: 'argument' : truncation from 'double' to 'const btScalar'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(151): warning C4305: 'argument' : truncation from 'double' to 'const btScalar'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(163): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(164): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(165): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(166): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(167): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(168): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(169): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(170): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(171): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(172): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(173): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(174): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(175): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(176): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(177): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(178): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(179): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(180): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(181): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(182): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(201): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(212): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(214): warning C4305: 'argument' : truncation from 'double' to 'const Ogre::Real'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(221): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\patrick\documents\github\gameengineconcepts\project0\tutorial3.cpp(224): warning C4305: 'argument' : truncation from 'double' to 'float'
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Aaron Yerman\Downloads\College\Major\Game Engines\GESVN\FinalProject\iteration0\Project0\Debug\Project1.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\OgreMain\boost_1_60_0\lib32-msvc-12.0" /LIBPATH:C:\OgreMain\Build9\lib/debug /LIBPATH:"C:\OgreMain\bullet-2.82\lib\\" OgreMain_d.lib OgreOverlay_d.lib OIS_d.lib OgreTerrain_d.lib BulletCollision_vs2010_debug.lib BulletDynamics_vs2010_debug.lib BulletSoftBody_vs2010_debug.lib ConvexDecomposition_vs2010_debug.lib BulletSoftBodyDX11Solvers_vs2010_debug.lib HACD_vs2010_debug.lib LinearMath_vs2010_debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Aaron Yerman\Downloads\College\Major\Game Engines\GESVN\FinalProject\iteration0\Project0\Debug\Project1.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Aaron Yerman\Downloads\College\Major\Game Engines\GESVN\FinalProject\iteration0\Project0\Debug\Project1.lib" /MACHINE:X86 Debug\BaseApplication.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Patrick\Documents\GitHub\gameEngineConcepts\Project0\Debug\Project1.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Patrick\Desktop\ogreBase\boost_1_60_0\lib32-msvc-12.0" /LIBPATH:C:\Users\Patrick\Desktop\ogreBase\Build9\lib/debug /LIBPATH:"C:\Users\Patrick\Desktop\ogreBase\bullet-2.82\lib\\" OgreMain_d.lib OgreOverlay_d.lib OIS_d.lib OgreTerrain_d.lib BulletCollision_vs2010_debug.lib BulletDynamics_vs2010_debug.lib BulletSoftBody_vs2010_debug.lib ConvexDecomposition_vs2010_debug.lib BulletSoftBodyDX11Solvers_vs2010_debug.lib HACD_vs2010_debug.lib LinearMath_vs2010_debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Patrick\Documents\GitHub\gameEngineConcepts\Project0\Debug\Project1.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Patrick\Documents\GitHub\gameEngineConcepts\Project0\Debug\Project1.lib" /MACHINE:X86 Debug\BaseApplication.obj
          Debug\Tutorial3.obj
-         Project1.vcxproj -> C:\Users\Aaron Yerman\Downloads\College\Major\Game Engines\GESVN\FinalProject\iteration0\Project0\Debug\Project1.exe
+         Project1.vcxproj -> C:\Users\Patrick\Documents\GitHub\gameEngineConcepts\Project0\Debug\Project1.exe
        PostBuildEvent:
-         copy /Y "C:\Users\Aaron Yerman\Downloads\College\Major\Game Engines\GESVN\FinalProject\iteration0\Project0\Debug\Project1.exe" "C:\OgreMain\Build9\bin\debug
+         copy /Y "C:\Users\Patrick\Documents\GitHub\gameEngineConcepts\Project0\Debug\Project1.exe" "C:\Users\Patrick\Desktop\ogreBase\Build9\bin\debug
          :VCEnd
                  1 file(s) copied.
-     1>Done Building Project "C:\Users\Aaron Yerman\Downloads\College\Major\Game Engines\GESVN\FinalProject\iteration0\Project0\Project1\Project1.vcxproj" (Build target(s)).
+     1>Done Building Project "C:\Users\Patrick\Documents\GitHub\gameEngineConcepts\Project0\Project1\Project1.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:09.67
+Time Elapsed 00:00:15.20

@@ -143,7 +143,14 @@ void TutorialApplication::createBulletSim(void) {
 
 		dynamicsWorld->addRigidBody(mGroundBody);
 		collisionShapes.push_back(groundShape);
-		CreateCube(btVector3(1963, 150, 1660),1.0f,btVector3(0.2,0.2,0.2),"Cube1");
+
+		// create the cubes
+		CreateCube(btVector3(1963, 10, 1660),1.0f,btVector3(0.2,0.2,0.2),"Cube1");
+		CreateCube(btVector3(1963, 10, 1685), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube2");
+		CreateCube(btVector3(1963, 10, 1635), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube3");
+		CreateCube(btVector3(1963, 25, 1672), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube4");
+		CreateCube(btVector3(1963, 25, 1648), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube5");
+		CreateCube(btVector3(1963, 40, 1660), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube6");
 
 	}
 
