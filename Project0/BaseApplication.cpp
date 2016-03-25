@@ -91,16 +91,21 @@ void BaseApplication::chooseSceneManager(void)
 //---------------------------------------------------------------------------
 void BaseApplication::createCamera(void)
 {
-    // Create the camera
-    mCamera = mSceneMgr->createCamera("PlayerCam");
+	// Create the camera
+	mCamera = mSceneMgr->createCamera("PlayerCam");
+	mCamera2 = mSceneMgr->createCamera("windowCam");
 
-    // Position it at 500 in Z direction
-    mCamera->setPosition(Ogre::Vector3(0,0,80));
-    // Look back along -Z
-    mCamera->lookAt(Ogre::Vector3(0,0,-300));
-    mCamera->setNearClipDistance(5);
+	// Position it at 500 in Z direction
+	mCamera->setPosition(Ogre::Vector3(0, 0, 80));
 
-    mCameraMan = new OgreBites::SdkCameraMan(mCamera);   // Create a default camera controller
+	// Look back along -Z
+	mCamera->lookAt(Ogre::Vector3(0, 0, -300));
+	mCamera->setNearClipDistance(5);
+	//mCamera2->lookAt(Ogre::Vector3(0, 0, -300));
+	mCamera2->setNearClipDistance(5);
+
+	mCameraMan = new OgreBites::SdkCameraMan(mCamera);   // Create a default camera controller
+	mCameraMan2 = new OgreBites::SdkCameraMan(mCamera2);
 }
 //---------------------------------------------------------------------------
 void BaseApplication::createFrameListener(void)
@@ -163,12 +168,17 @@ void BaseApplication::destroyScene(void)
 //---------------------------------------------------------------------------
 void BaseApplication::createViewports(void)
 {
-    // Create one viewport, entire window
-    Ogre::Viewport* vp = mWindow->addViewport(mCamera);
-    vp->setBackgroundColour(Ogre::ColourValue(0,0,0));
+	// Create one viewport, entire window
+	Ogre::Viewport* vp = mWindow->addViewport(mCamera);
+	Ogre::Viewport* vp2 = mWindow->addViewport(mCamera2, 1, 0.8, 0.0, 0.2, 0.4);
+	vp->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
+	vp2->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
+	vp->setOverlaysEnabled(true);
+	vp2->setOverlaysEnabled(false);
 
-    // Alter the camera aspect ratio to match the viewport
-    mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+	// Alter the camera aspect ratio to match the viewport
+	mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+	mCamera2->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
 }
 //---------------------------------------------------------------------------
 void BaseApplication::setupResources(void)

@@ -262,12 +262,11 @@ void TutorialApplication::createScene()
   // Sky Techniques
   // mSceneMgr->setSkyBox(true, "Examples/SpaceSkyBox", 300, false);
   mSceneMgr->setSkyDome(true, "Examples/CloudySky", 5, 8);
-  // Ogre::Plane plane;
-  // plane.d = 1000;
-  // plane.normal = Ogre::Vector3::NEGATIVE_UNIT_Y;
- 
-  // mSceneMgr->setSkyPlane(
-  //   true, plane, "Examples/SpaceSkyPlane", 1500, 40, true, 1.5, 150, 150);
+
+
+  mCamera2->setPosition(Ogre::Vector3(1963, 800, 1660));
+  mCamera2->pitch(Ogre::Radian(4.71F));
+  mCamera2->rotate(Ogre::Vector3::NEGATIVE_UNIT_Y, Ogre::Degree(90.0f));
   createBulletSim();
 }
  
