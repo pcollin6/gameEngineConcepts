@@ -40,6 +40,48 @@ TutorialApplication::~TutorialApplication()
 {
 }
  
+void TutorialApplication::CreateSphere(const btVector3 &Position, btScalar Mass, const btVector3 &scale, char * name){
+	// empty ogre vectors for the sphere size and position
+	Ogre::Vector3 size = Ogre::Vector3::ZERO;
+	Ogre::Vector3 pos = Ogre::Vector3::ZERO;
+	Ogre::SceneNode *sphereNode;
+	Ogre::Entity *sphereentity;
+	// Convert the bullet physics vector to the ogre vector
+	pos.x = Position.getX();
+	pos.y = Position.getY();
+	pos.z = Position.getZ();
+	sphereentity = mSceneMgr->createEntity(name, "sphere.mesh");
+
+	sphereentity->setCastShadows(true);
+	sphereNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	sphereNode->attachObject(sphereentity);
+	sphereNode->scale(Ogre::Vector3(scale.getX(), scale.getY(), scale.getZ()));
+
+	Ogre::AxisAlignedBox boundingB = sphereentity->getBoundingBox();
+
+	boundingB.scale(Ogre::Vector3(scale.getX(), scale.getY(), scale.getZ()));
+	size = boundingB.getSize()*0.95f;
+	btTransform Transform;
+	Transform.setIdentity();
+	Transform.setOrigin(Position);
+	MyMotionState *MotionState = new MyMotionState(Transform, sphereNode);
+	
+	btScalar HalfExtents(size.x*0.2f);
+	btCollisionShape *Shape = new btSphereShape(HalfExtents);
+	btVector3 LocalInertia;
+	Shape->calculateLocalInertia(Mass, LocalInertia);
+	btRigidBody *RigidBody = new btRigidBody(Mass, MotionState, Shape, LocalInertia);
+
+	RigidBody->setUserPointer((void *)(sphereNode));
+
+	dynamicsWorld->addRigidBody(RigidBody);
+	collisionShapes.push_back(Shape);
+
+	double velocity = 15.5;
+	//mCamera->getDerivedDirection()
+	RigidBody->setLinearVelocity(btVector3(10, 10, 0) * (1.0f * velocity));
+}
+
 void TutorialApplication::CreateCube(const btVector3 &Position, btScalar Mass, const btVector3 &scale, char * name){
 	// empty ogre vectors for the cubes size and position
 	Ogre::Vector3 size = Ogre::Vector3::ZERO;
@@ -145,13 +187,15 @@ void TutorialApplication::createBulletSim(void) {
 		collisionShapes.push_back(groundShape);
 
 		// create the cubes
-		CreateCube(btVector3(1963, 10, 1660),1.0f,btVector3(0.2,0.2,0.2),"Cube1");
+		CreateCube(btVector3(1963, 10, 1660), 1.0f, btVector3(0.2, 0.2, 0.2),"Cube1");
 		CreateCube(btVector3(1963, 10, 1685), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube2");
 		CreateCube(btVector3(1963, 10, 1635), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube3");
 		CreateCube(btVector3(1963, 25, 1672), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube4");
 		CreateCube(btVector3(1963, 25, 1648), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube5");
 		CreateCube(btVector3(1963, 40, 1660), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube6");
 
+		// create the projectile
+		CreateSphere(btVector3(1500, 10, 1650), 1.0f, btVector3(0.1, 0.1, 0.1), "Projectile1");
 	}
 
 
@@ -198,8 +242,8 @@ Ogre::ManualObject* TutorialApplication::createCubeMesh(Ogre::String name, Ogre:
 
 void TutorialApplication::createScene()
 {
-  mCamera->setPosition(Ogre::Vector3(1863, 60,1650 ));
-  mCamera->lookAt(Ogre::Vector3(2263, 50, 1200));
+  mCamera->setPosition(Ogre::Vector3(1500, 30, 1650));
+  mCamera->lookAt(Ogre::Vector3(1963, 30, 1685));
   mCamera->setNearClipDistance(.1);
  
   bool infiniteClip =
