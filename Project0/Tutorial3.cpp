@@ -78,8 +78,7 @@ void TutorialApplication::CreateSphere(const btVector3 &Position, btScalar Mass,
 	collisionShapes.push_back(Shape);
 
 	double velocity = 15.5;
-	//mCamera->getDerivedDirection()
-	RigidBody->setLinearVelocity(btVector3(10, 10, 0) * (1.0f * velocity));
+	RigidBody->setLinearVelocity(btVector3(10,10, 0) * (1.0f * velocity));
 }
 
 void TutorialApplication::CreateCube(const btVector3 &Position, btScalar Mass, const btVector3 &scale, char * name){
@@ -122,6 +121,7 @@ void TutorialApplication::CreateCube(const btVector3 &Position, btScalar Mass, c
 	dynamicsWorld->addRigidBody(RigidBody);
 	collisionShapes.push_back(Shape);
 }
+
 void TutorialApplication::createBulletSim(void) {
 	///collision configuration contains default setup for memory, collision setup. Advanced users can create their own configuration.
 	collisionConfiguration = new btDefaultCollisionConfiguration();
@@ -194,8 +194,6 @@ void TutorialApplication::createBulletSim(void) {
 		CreateCube(btVector3(1963, 25, 1648), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube5");
 		CreateCube(btVector3(1963, 40, 1660), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube6");
 
-		// create the projectile
-		CreateSphere(btVector3(1500, 10, 1650), 1.0f, btVector3(0.1, 0.1, 0.1), "Projectile1");
 	}
 
 
@@ -363,7 +361,28 @@ bool TutorialApplication::frameRenderingQueued(const Ogre::FrameEvent& fe)
     }
   }
  
+  processUnbufferedInput(fe);
+
   return ret;
+}
+
+void TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent& fe){
+	if (mKeyboard->isKeyDown(OIS::KC_SPACE)){
+		// create the projectile
+		if (!fire){
+			fire = true;
+			char *projNum = (char*)malloc(3);
+			itoa(numOfSpheres, projNum, 10);
+			char *projName = (char*)malloc(strlen(projNum) + strlen("Projectile") + 1);
+			strcpy(projName,"Projectile");
+			strcat(projName, projNum);
+			CreateSphere(btVector3(1500, 10, 1650), 1.0f, btVector3(0.1, 0.1, 0.1), projName);
+			numOfSpheres++;
+		}
+	}
+	else if (!mKeyboard->isKeyDown(OIS::KC_SPACE)){
+		fire = false;
+	}
 }
  
 void getTerrainImage(bool flipX, bool flipY, Ogre::Image& img)

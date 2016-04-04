@@ -4,6 +4,7 @@
 #include "btBulletDynamicsCommon.h"
 #include "btHeightfieldTerrainShape.h"
 #include "BaseApplication.h"
+#include <cstdlib>
  
 class TutorialApplication : public BaseApplication
 {
@@ -23,6 +24,8 @@ protected:
  
 private:
   void defineTerrain(long x, long y);
+  void processUnbufferedInput(const Ogre::FrameEvent& fe);
+  bool fire = false;
   void initBlendMaps(Ogre::Terrain* terrain);
   void configureTerrainDefaults(Ogre::Light* light);
   void createBulletSim(void);
@@ -30,6 +33,7 @@ private:
   Ogre::TerrainGroup* mTerrainGroup;
   Ogre::TerrainGlobalOptions* mTerrainGlobals;
  
+  int numOfSpheres = 0;
   OgreBites::Label* mInfoLabel;
   btDefaultCollisionConfiguration* collisionConfiguration;
   btCollisionDispatcher* dispatcher;
