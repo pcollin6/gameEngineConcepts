@@ -19,7 +19,7 @@ protected:
   virtual bool frameRenderingQueued(const Ogre::FrameEvent& fe);
   bool frameStarted(const Ogre::FrameEvent &evt);
   void CreateCube(const btVector3 &Position, btScalar Mass, const btVector3 &scale, char * name);
-  void CreateSphere(const btVector3 &Position, btScalar Mass, const btVector3 &scale, char * name);
+  void CreateSphere(const btVector3 &Position, btScalar Mass, const btVector3 &scale, char * name, float velocity);
   Ogre::ManualObject *createCubeMesh(Ogre::String name, Ogre::String matName);
  
 private:
@@ -34,6 +34,7 @@ private:
   Ogre::TerrainGlobalOptions* mTerrainGlobals;
  
   int numOfSpheres = 0;
+  float power = 0;
   OgreBites::Label* mInfoLabel;
   btDefaultCollisionConfiguration* collisionConfiguration;
   btCollisionDispatcher* dispatcher;

@@ -40,7 +40,7 @@ TutorialApplication::~TutorialApplication()
 {
 }
  
-void TutorialApplication::CreateSphere(const btVector3 &Position, btScalar Mass, const btVector3 &scale, char * name){
+void TutorialApplication::CreateSphere(const btVector3 &Position, btScalar Mass, const btVector3 &scale, char * name, float velocity){
 	// empty ogre vectors for the sphere size and position
 	Ogre::Vector3 size = Ogre::Vector3::ZERO;
 	Ogre::Vector3 pos = Ogre::Vector3::ZERO;
@@ -77,8 +77,19 @@ void TutorialApplication::CreateSphere(const btVector3 &Position, btScalar Mass,
 	dynamicsWorld->addRigidBody(RigidBody);
 	collisionShapes.push_back(Shape);
 
-	double velocity = 15.5;
-	RigidBody->setLinearVelocity(btVector3(10,10, 0) * (1.0f * velocity));
+
+	//gets cameras direction
+	Ogre::Vector3 CamDirection = mCamera->getDerivedDirection();
+
+	//Vector conversion
+	btVector3 FireVelocity = btVector3(CamDirection.x, CamDirection.y, CamDirection.z);
+
+	//Now as we discussed above, we want our vector to have a certain speed. We first normalize it, and then multiply it by Speed
+	FireVelocity.normalize();
+	FireVelocity *= velocity*100;
+
+	//Now we finally propel our box
+	RigidBody->setLinearVelocity(FireVelocity * 1);
 }
 
 void TutorialApplication::CreateCube(const btVector3 &Position, btScalar Mass, const btVector3 &scale, char * name){
@@ -240,6 +251,7 @@ Ogre::ManualObject* TutorialApplication::createCubeMesh(Ogre::String name, Ogre:
 
 void TutorialApplication::createScene()
 {
+
   mCamera->setPosition(Ogre::Vector3(1500, 30, 1650));
   mCamera->lookAt(Ogre::Vector3(1963, 30, 1685));
   mCamera->setNearClipDistance(.1);
@@ -368,20 +380,19 @@ bool TutorialApplication::frameRenderingQueued(const Ogre::FrameEvent& fe)
 
 void TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent& fe){
 	if (mKeyboard->isKeyDown(OIS::KC_SPACE)){
-		// create the projectile
-		if (!fire){
-			fire = true;
-			char *projNum = (char*)malloc(3);
-			itoa(numOfSpheres, projNum, 10);
-			char *projName = (char*)malloc(strlen(projNum) + strlen("Projectile") + 1);
-			strcpy(projName,"Projectile");
-			strcat(projName, projNum);
-			CreateSphere(btVector3(1500, 10, 1650), 1.0f, btVector3(0.1, 0.1, 0.1), projName);
-			numOfSpheres++;
-		}
+		fire = true;
+		power += fe.timeSinceLastFrame;
 	}
-	else if (!mKeyboard->isKeyDown(OIS::KC_SPACE)){
+	else if (!mKeyboard->isKeyDown(OIS::KC_SPACE) && fire){
 		fire = false;
+		char *projNum = (char*)malloc(3);
+		itoa(numOfSpheres, projNum, 10);
+		char *projName = (char*)malloc(strlen(projNum) + strlen("Projectile") + 1);
+		strcpy(projName, "Projectile");
+		strcat(projName, projNum);
+		CreateSphere(btVector3(mCamera->getPosition().x, mCamera->getPosition().y, mCamera->getPosition().z), 1.0f, btVector3(0.1, 0.1, 0.1), projName, power);
+		power = 0;
+		numOfSpheres++;
 	}
 }
  
