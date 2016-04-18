@@ -23,6 +23,7 @@ protected:
   Ogre::ManualObject *createCubeMesh(Ogre::String name, Ogre::String matName);
  
 private:
+  void resetTargets();
   void defineTerrain(long x, long y);
   void processUnbufferedInput(const Ogre::FrameEvent& fe);
   bool fire = false;
