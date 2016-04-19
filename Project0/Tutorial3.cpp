@@ -92,7 +92,7 @@ void TutorialApplication::CreateSphere(const btVector3 &Position, btScalar Mass,
 	RigidBody->setLinearVelocity(FireVelocity * 1);
 }
 
-void TutorialApplication::CreateCube(const btVector3 &Position, btScalar Mass, const btVector3 &scale, char * name){
+void TutorialApplication::CreateCube(const btVector3 &Position, btScalar Mass, const btVector3 &scale, char * name, bool vis){
 	// empty ogre vectors for the cubes size and position
 	Ogre::Vector3 size = Ogre::Vector3::ZERO;
 	Ogre::Vector3 pos = Ogre::Vector3::ZERO;
@@ -105,6 +105,7 @@ void TutorialApplication::CreateCube(const btVector3 &Position, btScalar Mass, c
 	boxentity = mSceneMgr->createEntity(name, "cube.mesh");
 	//boxentity->setScale(Vector3(scale.x,scale.y,scale.z));
 	boxentity->setCastShadows(true);
+	boxentity->setVisible(vis);
 	boxNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	boxNode->attachObject(boxentity);
 	boxNode->scale(Ogre::Vector3(scale.getX(), scale.getY(), scale.getZ()));
@@ -201,17 +202,42 @@ void TutorialApplication::createBulletSim(void) {
 
 	}
 
+	CreateCube(btVector3(2263, 30, 1800), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube1", randomize());
+	CreateCube(btVector3(1830, 30, 1720), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube2", randomize());
+	CreateCube(btVector3(1963, 30, 1535), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube3", randomize());
+	CreateCube(btVector3(2500, 30, 1500), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube4", randomize());
+	CreateCube(btVector3(1963, 30, 1590), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube5", randomize());
+	CreateCube(btVector3(2063, 30, 1660), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube6", randomize());
 
   }
 
+bool TutorialApplication::randomize() {
+	std::random_device seeder;
+	std::mt19937 engine(seeder());
+	std::uniform_int_distribution<int> dist(0, 10);
+	int randNum = dist(engine);
+	if (randNum >= 5)
+		return true;
+	else
+		return false;
+
+}
+
 void TutorialApplication::resetTargets() {
+	mSceneMgr->destroyEntity("Cube1");
+	mSceneMgr->destroyEntity("Cube2");
+	mSceneMgr->destroyEntity("Cube3");
+	mSceneMgr->destroyEntity("Cube4");
+	mSceneMgr->destroyEntity("Cube5");
+	mSceneMgr->destroyEntity("Cube6");
+
 	// create the cubes
-	CreateCube(btVector3(1963, 10, 1660), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube1");
-	CreateCube(btVector3(1963, 10, 1685), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube2");
-	CreateCube(btVector3(1963, 10, 1635), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube3");
-	CreateCube(btVector3(1963, 25, 1672), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube4");
-	CreateCube(btVector3(1963, 25, 1648), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube5");
-	CreateCube(btVector3(1963, 40, 1660), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube6");
+	CreateCube(btVector3(2263, 30, 1800), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube1", randomize());
+	CreateCube(btVector3(1830, 30, 1720), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube2", randomize());
+	CreateCube(btVector3(1963, 30, 1535), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube3", randomize());
+	CreateCube(btVector3(2500, 30, 1500), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube4", randomize());
+	CreateCube(btVector3(1963, 30, 1590), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube5", randomize());
+	CreateCube(btVector3(2063, 30, 1660), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube6", randomize());
 }
 
 Ogre::ManualObject* TutorialApplication::createCubeMesh(Ogre::String name, Ogre::String matName) {
@@ -251,8 +277,6 @@ Ogre::ManualObject* TutorialApplication::createCubeMesh(Ogre::String name, Ogre:
 
 	return cube;
 }
-
-
 
 void TutorialApplication::createScene()
 {
@@ -384,8 +408,12 @@ bool TutorialApplication::frameRenderingQueued(const Ogre::FrameEvent& fe)
 }
 
 void TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent& fe){
-	if (mKeyboard->isKeyDown(OIS::KC_R)) {
+	if (!mKeyboard->isKeyDown(OIS::KC_Y) && isDown) {
+		isDown = false;
+	}
+	if (mKeyboard->isKeyDown(OIS::KC_Y) && !isDown) {
 		resetTargets();
+		isDown = true;
 	}
 	if (mKeyboard->isKeyDown(OIS::KC_SPACE)){
 		fire = true;
