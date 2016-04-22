@@ -21,9 +21,6 @@
     <ClCompile Include="..\Tutorial3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="target.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Tutorial3.h">
@@ -32,7 +29,7 @@
     <ClInclude Include="..\BaseApplication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="target.h">
+    <ClInclude Include="..\collisionStructs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

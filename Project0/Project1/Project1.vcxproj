@@ -13,12 +13,11 @@
   <ItemGroup>
     <ClCompile Include="..\BaseApplication.cpp" />
     <ClCompile Include="..\Tutorial3.cpp" />
-    <ClCompile Include="target.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\BaseApplication.h" />
+    <ClInclude Include="..\collisionStructs.h" />
     <ClInclude Include="..\Tutorial3.h" />
-    <ClInclude Include="target.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{89B5DCEE-C4E5-4828-9F9C-7B6777D92CB6}</ProjectGuid>
@@ -54,12 +53,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(OGRE_HOME)/include/OGRE/Overlay;$(OGRE_HOME)/include/OGRE;$(BOOST_DIR);$(OGRE_HOME)/include/OIS;$(OGRE_HOME)/include;$(BULLET_INCLUDE)/BulletCollision/CollisionShapes;$(BULLET_INCLUDE);$(BULLET_INCLUDE)/LinearMath;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OGRE_HOME)/include/OGRE/Overlay;$(OGRE_HOME)/include/OGRE;$(BOOST_DIR);$(OGRE_HOME)/include/OIS;$(OGRE_HOME)/include;$(BULLET_INCLUDE)/BulletCollision/CollisionShapes;$(BULLET_INCLUDE);$(BULLET_INCLUDE)/LinearMath;$(CEGUI_INCLUDE);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(BOOST_LIB);$(OGRE_LIBS)/debug;$(BULLET_LIBS);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreMain_d.lib;OgreOverlay_d.lib;OIS_d.lib;OgreTerrain_d.lib;BulletCollision_vs2010_debug.lib;BulletDynamics_vs2010_debug.lib;BulletSoftBody_vs2010_debug.lib;ConvexDecomposition_vs2010_debug.lib;BulletSoftBodyDX11Solvers_vs2010_debug.lib;HACD_vs2010_debug.lib;LinearMath_vs2010_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(BOOST_LIB);$(OGRE_LIBS)/debug;$(BULLET_LIBS);$(CEGUI_LIB);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreMain_d.lib;OgreOverlay_d.lib;OIS_d.lib;OgreTerrain_d.lib;BulletCollision_vs2010_debug.lib;BulletDynamics_vs2010_debug.lib;BulletSoftBody_vs2010_debug.lib;ConvexDecomposition_vs2010_debug.lib;BulletSoftBodyDX11Solvers_vs2010_debug.lib;HACD_vs2010_debug.lib;LinearMath_vs2010_debug.lib;CEGUIBase-0_d.lib;CEGUIOgreRenderer-0_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y "$(OutDir)$(TargetFileName)" "$(PROJECT_BUILDS)</Command>

@@ -1,33 +1,4 @@
 #include "Tutorial3.h"
-class MyMotionState : public btMotionState {
-public:
-	MyMotionState(const btTransform &initialpos, Ogre::SceneNode *node) {
-		mVisibleobj = node;
-		mPos1 = initialpos;
-	}
-	virtual ~MyMotionState() {    }
-	void setNode(Ogre::SceneNode *node) {
-		mVisibleobj = node;
-	}
-	virtual void getWorldTransform(btTransform &worldTrans) const {
-		worldTrans = mPos1;
-	}
-	virtual void setWorldTransform(const btTransform &worldTrans) {
-		if (NULL == mVisibleobj) return; // silently return before we set a node
-		btQuaternion rot = worldTrans.getRotation();
-		mVisibleobj->setOrientation(rot.w(), rot.x(), rot.y(), rot.z());
-		btVector3 pos = worldTrans.getOrigin();
-		// TODO **** XXX need to fix this up such that it renders properly since this doesnt know the scale of the node
-		// also the getCube function returns a cube that isnt centered on Z
-		mVisibleobj->setPosition(pos.x(), pos.y() + 5, pos.z() - 5);
-	}
-protected:
-	Ogre::SceneNode *mVisibleobj;
-	btTransform mPos1;
-};
-
-
-
  
 TutorialApplication::TutorialApplication()
   : mTerrainGroup(0),
@@ -44,39 +15,43 @@ void TutorialApplication::CreateSphere(const btVector3 &Position, btScalar Mass,
 	// empty ogre vectors for the sphere size and position
 	Ogre::Vector3 size = Ogre::Vector3::ZERO;
 	Ogre::Vector3 pos = Ogre::Vector3::ZERO;
-	Ogre::SceneNode *sphereNode;
-	Ogre::Entity *sphereentity;
+
+	ptrToOgreObject = new ogreObject;
 	// Convert the bullet physics vector to the ogre vector
 	pos.x = Position.getX();
 	pos.y = Position.getY();
 	pos.z = Position.getZ();
-	sphereentity = mSceneMgr->createEntity(name, "sphere.mesh");
+	ptrToOgreObject->entityObject = mSceneMgr->createEntity(name, "sphere.mesh");
+	ptrToOgreObject->entityObject->setCastShadows(true);
 
-	sphereentity->setCastShadows(true);
-	sphereNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	sphereNode->attachObject(sphereentity);
-	sphereNode->scale(Ogre::Vector3(scale.getX(), scale.getY(), scale.getZ()));
+	ptrToOgreObject->sceneNodeObject = mSceneMgr->getRootSceneNode()->createChildSceneNode(name);
+	ptrToOgreObject->sceneNodeObject->attachObject(ptrToOgreObject->entityObject);
+	ptrToOgreObject->sceneNodeObject->scale(Ogre::Vector3(scale.getX(), scale.getY(), scale.getZ()));
 
-	Ogre::AxisAlignedBox boundingB = sphereentity->getBoundingBox();
+	Ogre::AxisAlignedBox boundingB = ptrToOgreObject->entityObject->getBoundingBox();
 
 	boundingB.scale(Ogre::Vector3(scale.getX(), scale.getY(), scale.getZ()));
 	size = boundingB.getSize()*0.95f;
 	btTransform Transform;
 	Transform.setIdentity();
 	Transform.setOrigin(Position);
-	MyMotionState *MotionState = new MyMotionState(Transform, sphereNode);
-	
-	btScalar HalfExtents(size.x*0.2f);
-	btCollisionShape *Shape = new btSphereShape(HalfExtents);
+	ptrToOgreObject->myMotionStateObject = new MyMotionState(Transform, ptrToOgreObject->sceneNodeObject);
+
+	btScalar HalfExtents(size.x);
+	ptrToOgreObject->btCollisionShapeObject = new btSphereShape(HalfExtents);
 	btVector3 LocalInertia;
-	Shape->calculateLocalInertia(Mass, LocalInertia);
-	btRigidBody *RigidBody = new btRigidBody(Mass, MotionState, Shape, LocalInertia);
+	ptrToOgreObject->btCollisionShapeObject->calculateLocalInertia(Mass, LocalInertia);
+	ptrToOgreObject->btRigidBodyObject = new btRigidBody(Mass, ptrToOgreObject->myMotionStateObject, ptrToOgreObject->btCollisionShapeObject, LocalInertia);
 
-	RigidBody->setUserPointer((void *)(sphereNode));
+	ptrToOgreObject->btRigidBodyObject->setUserPointer((void *)(ptrToOgreObject->sceneNodeObject));
 
-	dynamicsWorld->addRigidBody(RigidBody);
-	collisionShapes.push_back(Shape);
+	ptrToOgreObject->btCollisionObjectObject = ptrToOgreObject->btRigidBodyObject;
+	ptrToOgreObject->objectDelete = false;
+	ptrToOgreObject->objectType = name;
+	ptrToOgreObjects.push_back(ptrToOgreObject);
 
+	dynamicsWorld->addRigidBody(ptrToOgreObject->btRigidBodyObject);
+	collisionShapes.push_back(ptrToOgreObject->btCollisionShapeObject);
 
 	//gets cameras direction
 	Ogre::Vector3 CamDirection = mCamera->getDerivedDirection();
@@ -86,52 +61,60 @@ void TutorialApplication::CreateSphere(const btVector3 &Position, btScalar Mass,
 
 	//Now as we discussed above, we want our vector to have a certain speed. We first normalize it, and then multiply it by Speed
 	FireVelocity.normalize();
-	FireVelocity *= velocity*100;
+	FireVelocity *= 750;
 
 	//Now we finally propel our box
-	RigidBody->setLinearVelocity(FireVelocity * 1);
+	ptrToOgreObject->btRigidBodyObject->setLinearVelocity(FireVelocity * 1);
 }
 
 void TutorialApplication::CreateCube(const btVector3 &Position, btScalar Mass, const btVector3 &scale, char * name, bool vis){
 	// empty ogre vectors for the cubes size and position
 	Ogre::Vector3 size = Ogre::Vector3::ZERO;
 	Ogre::Vector3 pos = Ogre::Vector3::ZERO;
-	Ogre::SceneNode *boxNode;
-	Ogre::Entity *boxentity;
+
+	ptrToOgreObject = new ogreObject;
 	// Convert the bullet physics vector to the ogre vector
 	pos.x = Position.getX();
 	pos.y = Position.getY();
 	pos.z = Position.getZ();
-	boxentity = mSceneMgr->createEntity(name, "cube.mesh");
-	//boxentity->setScale(Vector3(scale.x,scale.y,scale.z));
-	boxentity->setCastShadows(true);
-	boxentity->setVisible(vis);
-	boxNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	boxNode->attachObject(boxentity);
-	boxNode->scale(Ogre::Vector3(scale.getX(), scale.getY(), scale.getZ()));
+	ptrToOgreObject->entityObject = mSceneMgr->createEntity(name, "cube.mesh");
+	ptrToOgreObject->entityObject->setCastShadows(true);
+	try{
+		ptrToOgreObject->sceneNodeObject = mSceneMgr->getSceneNode(name);
+	}
+	catch (Ogre::Exception& e){
+		ptrToOgreObject->sceneNodeObject = mSceneMgr->getRootSceneNode()->createChildSceneNode(name);
+	}
+	ptrToOgreObject->sceneNodeObject->attachObject(ptrToOgreObject->entityObject);
+	ptrToOgreObject->sceneNodeObject->scale(Ogre::Vector3(scale.getX(), scale.getY(), scale.getZ()));
 	//boxNode->setScale(Vector3(0.1,0.1,0.1));
-	Ogre::AxisAlignedBox boundingB = boxentity->getBoundingBox();
+	Ogre::AxisAlignedBox boundingB = ptrToOgreObject->entityObject->getBoundingBox();
 	//Ogre::AxisAlignedBox boundingB = boxNode->_getWorldAABB();
 	boundingB.scale(Ogre::Vector3(scale.getX(), scale.getY(), scale.getZ()));
 	size = boundingB.getSize()*0.95f;
 	btTransform Transform;
 	Transform.setIdentity();
 	Transform.setOrigin(Position);
-	MyMotionState *MotionState = new MyMotionState(Transform, boxNode);
+	ptrToOgreObject->myMotionStateObject = new MyMotionState(Transform, ptrToOgreObject->sceneNodeObject);
 	//Give the rigid body half the size
 	// of our cube and tell it to create a BoxShape (cube)
-	btVector3 HalfExtents(size.x*0.5f, size.y*0.5f, size.z*0.5f);
-	btCollisionShape *Shape = new btBoxShape(HalfExtents);
+	btVector3 HalfExtents(size.x * 0.5f, size.y * 0.5f, size.z * 0.5f);
+	ptrToOgreObject->btCollisionShapeObject = new btBoxShape(HalfExtents);
 	btVector3 LocalInertia;
-	Shape->calculateLocalInertia(Mass, LocalInertia);
-	btRigidBody *RigidBody = new btRigidBody(Mass, MotionState, Shape, LocalInertia);
+	ptrToOgreObject->btCollisionShapeObject->calculateLocalInertia(Mass, LocalInertia);
+	ptrToOgreObject->btRigidBodyObject = new btRigidBody(Mass, ptrToOgreObject->myMotionStateObject, ptrToOgreObject->btCollisionShapeObject, LocalInertia);
 
 	// Store a pointer to the Ogre Node so we can update it later
-	RigidBody->setUserPointer((void *)(boxNode));
+	ptrToOgreObject->btRigidBodyObject->setUserPointer((void *)(ptrToOgreObject->sceneNodeObject));
+
+	ptrToOgreObject->btCollisionObjectObject = ptrToOgreObject->btRigidBodyObject;
+	ptrToOgreObject->objectDelete = false;
+	ptrToOgreObject->objectType = name;
+	ptrToOgreObjects.push_back(ptrToOgreObject);
 
 	// Add it to the physics world
-	dynamicsWorld->addRigidBody(RigidBody);
-	collisionShapes.push_back(Shape);
+	dynamicsWorld->addRigidBody(ptrToOgreObject->btRigidBodyObject);
+	collisionShapes.push_back(ptrToOgreObject->btCollisionShapeObject);
 }
 
 void TutorialApplication::createBulletSim(void) {
@@ -201,14 +184,20 @@ void TutorialApplication::createBulletSim(void) {
 
 
 	}
-
-	CreateCube(btVector3(2263, 30, 1800), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube1", randomize());
-	CreateCube(btVector3(1830, 30, 1720), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube2", randomize());
-	CreateCube(btVector3(1963, 30, 1535), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube3", randomize());
-	CreateCube(btVector3(2500, 30, 1500), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube4", randomize());
-	CreateCube(btVector3(1963, 30, 1590), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube5", randomize());
-	CreateCube(btVector3(2063, 30, 1660), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube6", randomize());
-
+	for (int i = 0; i < 5; i++){
+		char *cubeNum = (char*)malloc(3);
+		itoa(numOfCubes, cubeNum, 10);
+		char *cubeName = (char*)malloc(strlen(cubeNum) + strlen("Cube") + 1);
+		strcpy(cubeName, "Cube");
+		strcat(cubeName, cubeNum);
+		std::srand(std::time(NULL));
+		int locationIndex = std::rand() % (targetLocations.size());
+		btVector3 location = targetLocations[locationIndex];
+		targetLocations.erase(targetLocations.begin() + locationIndex);
+		CreateCube(location, 1.0f, btVector3(0.2, 0.2, 0.2), cubeName, randomize());
+		itemsLeftOver++;
+		numOfCubes++;
+	}
   }
 
 bool TutorialApplication::randomize() {
@@ -223,21 +212,67 @@ bool TutorialApplication::randomize() {
 
 }
 
-void TutorialApplication::resetTargets() {
-	mSceneMgr->destroyEntity("Cube1");
-	mSceneMgr->destroyEntity("Cube2");
-	mSceneMgr->destroyEntity("Cube3");
-	mSceneMgr->destroyEntity("Cube4");
-	mSceneMgr->destroyEntity("Cube5");
-	mSceneMgr->destroyEntity("Cube6");
+bool TutorialApplication::resetTargets(const CEGUI::EventArgs& e) {
+	int count = ptrToOgreObjects.size();
+	for (int i = 0; i < count; i++){
+		removeObject(ptrToOgreObjects[i]);
+	}
+	numOfCubes = 0;
+	numOfSpheres = 0;
+	collisionShapes.clear();
+	delete dynamicsWorld;
+	targetLocations.clear();
+	addLocations();
+	itemsLeftOver = 0;
+	createBulletSim();
+	return true;
+}
 
-	// create the cubes
-	CreateCube(btVector3(2263, 30, 1800), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube1", randomize());
-	CreateCube(btVector3(1830, 30, 1720), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube2", randomize());
-	CreateCube(btVector3(1963, 30, 1535), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube3", randomize());
-	CreateCube(btVector3(2500, 30, 1500), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube4", randomize());
-	CreateCube(btVector3(1963, 30, 1590), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube5", randomize());
-	CreateCube(btVector3(2063, 30, 1660), 1.0f, btVector3(0.2, 0.2, 0.2), "Cube6", randomize());
+void TutorialApplication::resetTargets() {
+	for (int i = 0; i < ptrToOgreObjects.size(); i++){
+		removeObject(ptrToOgreObjects[i]);
+		i--;
+	}
+	numOfCubes = 0;
+	numOfSpheres = 0;
+	collisionShapes.clear();
+	delete dynamicsWorld;
+	targetLocations.clear();
+	addLocations();
+	itemsLeftOver = 0;
+	char* targetsLeft = (char*)malloc(3 + strlen(" items left") + 1);
+	itoa(itemsLeftOver, targetsLeft, 10);
+	strcat(targetsLeft, " items left");
+	itemsLeft->setText(CEGUI::String(targetsLeft));
+	createBulletSim();
+}
+
+void TutorialApplication::removeObject(ogreObject *object) {
+	for (int i = 0; i < ptrToOgreObjects.size(); i++){
+		if (ptrToOgreObjects[i] == object){
+			ptrToOgreObjects.erase(ptrToOgreObjects.begin() + i);
+		}
+	}
+	object->entityObject->detachFromParent();
+	mSceneMgr->destroyEntity(object->entityObject);
+	object->entityObject = NULL;
+	mSceneMgr->destroySceneNode(object->sceneNodeObject);
+	object->sceneNodeObject = NULL;
+	object->objectDelete = true;
+
+	if (object->btRigidBodyObject && object->btRigidBodyObject->getMotionState())
+		delete object->btRigidBodyObject->getMotionState();
+	object->myMotionStateObject = NULL;
+	dynamicsWorld->removeCollisionObject(object->btCollisionObjectObject);
+	delete object->btCollisionObjectObject;
+	object->btCollisionObjectObject = NULL;
+	object->btRigidBodyObject = NULL;
+	delete object->btCollisionShapeObject;
+	object->btCollisionShapeObject = NULL;
+
+	// now need to clean up the memory and set the pointer to NULL for that memory
+	delete object;
+	object = NULL;
 }
 
 Ogre::ManualObject* TutorialApplication::createCubeMesh(Ogre::String name, Ogre::String matName) {
@@ -278,8 +313,21 @@ Ogre::ManualObject* TutorialApplication::createCubeMesh(Ogre::String name, Ogre:
 	return cube;
 }
 
+void TutorialApplication::addLocations(){
+	targetLocations.push_back(btVector3(2263, 30, 1800));
+	targetLocations.push_back(btVector3(2383, 30, 1900));
+	targetLocations.push_back(btVector3(2163, 30, 1950));
+	targetLocations.push_back(btVector3(2000, 30, 1880));
+	targetLocations.push_back(btVector3(2200, 30, 1700));
+	targetLocations.push_back(btVector3(2100, 30, 1500));
+	targetLocations.push_back(btVector3(2400, 30, 1550));
+	targetLocations.push_back(btVector3(2450, 30, 1975));
+	targetLocations.push_back(btVector3(2263, 30, 2000));
+}
+
 void TutorialApplication::createScene()
 {
+  addLocations();
 
   mCamera->setPosition(Ogre::Vector3(1500, 30, 1650));
   mCamera->lookAt(Ogre::Vector3(1963, 30, 1685));
@@ -351,13 +399,50 @@ void TutorialApplication::createScene()
   mCamera2->pitch(Ogre::Radian(4.71F));
   mCamera2->rotate(Ogre::Vector3::NEGATIVE_UNIT_Y, Ogre::Degree(90.0f));
   createBulletSim();
+
+
+  mRenderer = &CEGUI::OgreRenderer::bootstrapSystem();
+  CEGUI::ImageManager::setImagesetDefaultResourceGroup("Imagesets");
+  CEGUI::Font::setDefaultResourceGroup("Fonts");
+  CEGUI::Scheme::setDefaultResourceGroup("Schemes");
+  CEGUI::WidgetLookManager::setDefaultResourceGroup("LookNFeel");
+  CEGUI::WindowManager::setDefaultResourceGroup("Layouts");
+
+  CEGUI::SchemeManager::getSingleton().createFromFile("TaharezLook.scheme");
+  CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setDefaultImage("TaharezLook/MouseArrow");
+
+  CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
+  CEGUI::Window *sheet = wmgr.createWindow("DefaultWindow", "CEGUIDemo/Sheet");
+
+  CEGUI::Window *Rebuild = wmgr.createWindow("TaharezLook/Button", "Button");
+  Rebuild->setText("Y To Restart");
+  Rebuild->setSize(CEGUI::USize(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05, 0)));
+  Rebuild->setPosition(CEGUI::UVector2(CEGUI::UDim(0, 0), CEGUI::UDim(0.10, 0)));
+  Rebuild->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::resetTargets, this));
+
+  //Creates the textbox for the program
+  itemsLeft = (CEGUI::DefaultWindow*)wmgr.createWindow("TaharezLook/Editbox"); 
+  char* targetsLeft = (char*)malloc(3 + strlen(" items left") + 1);
+  itoa(itemsLeftOver, targetsLeft, 10);
+  strcat(targetsLeft, " items left");
+  itemsLeft->setText(CEGUI::String(targetsLeft));
+  itemsLeft->setSize(CEGUI::USize(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05, 0)));
+
+  //Creates the textbox for the program
+  time = (CEGUI::DefaultWindow*)wmgr.createWindow("TaharezLook/Editbox");
+  time->setText("");
+  time->setSize(CEGUI::USize(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05, 0)));
+  time->setPosition(CEGUI::UVector2(CEGUI::UDim(0, 0), CEGUI::UDim(0.05, 0)));
+
+  sheet->addChild(Rebuild);
+  sheet->addChild(itemsLeft);
+  sheet->addChild(time);
+  CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(sheet);
 }
  
 void TutorialApplication::createFrameListener()
 {
   BaseApplication::createFrameListener();
- 
-  mInfoLabel = mTrayMgr->createLabel(OgreBites::TL_TOP, "TerrainInfo", "", 350);
 }
  
 void TutorialApplication::destroyScene()
@@ -375,33 +460,114 @@ bool TutorialApplication::frameStarted(const Ogre::FrameEvent &evt)
 	dynamicsWorld->stepSimulation(evt.timeSinceLastFrame);
 	return true;
 }
+
+
+
+void TutorialApplication::handleCollisions(std::vector<contactPair> pairs){
+
+	for (int i = 0; i < pairs.size(); i++) {
+		if (!((pairs[i].ptrToOgreObject1->objectType.substr(0, 10) == "Projectile" && pairs[i].ptrToOgreObject2->objectType.substr(0, 4) == "Cube") || (pairs[i].ptrToOgreObject2->objectType.substr(0, 10) == "Projectile" && pairs[i].ptrToOgreObject1->objectType.substr(0, 4) == "Cube"))) {
+			pairs.erase(pairs.begin() + i);
+			i--;
+		}
+		else{
+			removeObject(pairs[i].ptrToOgreObject1);
+			removeObject(pairs[i].ptrToOgreObject2);
+			char* targetsLeft = (char*)malloc(3 + strlen(" items left") + 1);
+			itemsLeftOver--;
+			itoa(itemsLeftOver, targetsLeft, 10);
+			strcat(targetsLeft, " items left");
+			itemsLeft->setText(CEGUI::String(targetsLeft));
+			pairs.erase(pairs.begin() + i);
+			i--;
+		}
+	}
+
+	contactPairs.clear();
+}
+
+// Called in getCollisionPairs function
+// sets the ptr to ogreObject to the ogreObject based on btCollisionObject
+ogreObject* TutorialApplication::getOgreObject(const btCollisionObject * obj) {
+	for (int i = 0; i < ptrToOgreObjects.size(); ++i) {
+		if (ptrToOgreObjects[i]->btCollisionObjectObject == obj)
+			return ptrToOgreObjects[i];
+
+	}
+	ogreObject* ret = new ogreObject;
+	return ret;
+
+}
+
+void TutorialApplication::getContactPairs(std::vector<contactPair> &contactPairs) {
+
+	//dynamicsworld->stepsimulation called in frameStarted function
+	int numManifolds = dynamicsWorld->getDispatcher()->getNumManifolds();
+	for (int i = 0; i < numManifolds; i++) {
+
+		btPersistentManifold* contactManifold = dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+
+		const btCollisionObject* obA = contactManifold->getBody0();
+		const btCollisionObject* obB = contactManifold->getBody1();
+
+		int numContacts = contactManifold->getNumContacts();
+		for (int j = 0; j < numContacts; j++) {
+			btManifoldPoint& pt = contactManifold->getContactPoint(j);
+			if (pt.getDistance() < 0.f) {
+				// really, all we need to keep is the 1st time an object contacts because we want to deal with contact as soon as it happens
+				// so subsequent contacts can be ignored
+
+				// temporary to hold extracted 1st contact pair information
+				contactPair pushToVec;
+
+				// get the pointers to the pair of contact objects
+				pushToVec.collisionObject1 = contactManifold->getBody0();
+				pushToVec.collisionObject2 = contactManifold->getBody1();
+
+				// up cast those pointers to get the pair of rigidbodypointers
+				pushToVec.rigidBodyObject1 = ((btRigidBody*)contactManifold->getBody0());
+				pushToVec.rigidBodyObject2 = ((btRigidBody*)contactManifold->getBody1());
+
+				pushToVec.ptrToOgreObject1 = getOgreObject(contactManifold->getBody0());
+				pushToVec.ptrToOgreObject2 = getOgreObject(contactManifold->getBody1());
+
+				pushToVec.ptrToOgreObject1Ptr = &(pushToVec.ptrToOgreObject1);
+				pushToVec.ptrToOgreObject2Ptr = &(pushToVec.ptrToOgreObject2);
+
+				const btVector3& ptA = pt.getPositionWorldOnA();
+				const btVector3& ptB = pt.getPositionWorldOnB();
+				// not using the normal
+				const btVector3& normalOnB = pt.m_normalWorldOnB;
+
+				// get the contact position out of bullet and put it in an ogre vector
+				pushToVec.positionObject1.x = ptA.getX();
+				pushToVec.positionObject1.y = ptA.getY();
+				pushToVec.positionObject1.z = ptA.getZ();
+				pushToVec.positionObject2.x = ptB.getX();
+				pushToVec.positionObject2.y = ptB.getY();
+				pushToVec.positionObject2.z = ptB.getZ();
+
+				contactPairs.push_back(pushToVec);
+
+			}
+		}
+	}
+}
  
 bool TutorialApplication::frameRenderingQueued(const Ogre::FrameEvent& fe)
 {
   bool ret = BaseApplication::frameRenderingQueued(fe);
- 
-  if (mTerrainGroup->isDerivedDataUpdateInProgress())
-  {
-    mTrayMgr->moveWidgetToTray(mInfoLabel, OgreBites::TL_TOP, 0);
-    mInfoLabel->show();
- 
-    if (mTerrainsImported)
-      mInfoLabel->setCaption("Building terrain...");
-    else
-      mInfoLabel->setCaption("Updating textures...");
-  }
-  else
-  {
-    mTrayMgr->removeWidgetFromTray(mInfoLabel);
-    mInfoLabel->hide();
- 
-    if (mTerrainsImported)
-    {
-      mTerrainGroup->saveAllTerrains(true);
-      mTerrainsImported = false;
-    }
-  }
- 
+  timeInt += fe.timeSinceLastFrame;
+  std::ostringstream ss;
+  ss << timeInt;
+  std::string str = ss.str();
+  time->setText(CEGUI::String(str.c_str()));
+
+  // this should hold collision information, is this in the right place?
+  getContactPairs(contactPairs);
+
+  handleCollisions(contactPairs);
+
   processUnbufferedInput(fe);
 
   return ret;
@@ -426,7 +592,7 @@ void TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent& fe){
 		char *projName = (char*)malloc(strlen(projNum) + strlen("Projectile") + 1);
 		strcpy(projName, "Projectile");
 		strcat(projName, projNum);
-		CreateSphere(btVector3(mCamera->getPosition().x, mCamera->getPosition().y, mCamera->getPosition().z), 1.0f, btVector3(0.1, 0.1, 0.1), projName, power);
+		CreateSphere(btVector3(mCamera->getPosition().x, mCamera->getPosition().y, mCamera->getPosition().z), 1.0f, btVector3(0.05, 0.05, 0.05), projName, power);
 		power = 0;
 		numOfSpheres++;
 	}

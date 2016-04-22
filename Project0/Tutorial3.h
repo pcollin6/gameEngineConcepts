@@ -6,6 +6,18 @@
 #include "BaseApplication.h"
 #include <cstdlib>
 #include <random>
+#include <CEGUI/CEGUI.h>
+#include <CEGUI/RendererModules/Ogre/Renderer.h>
+#include <vector>
+#include <string>
+#include "collisionStructs.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string>
+#include <cstring>
+#include <sstream>
+#include <iostream>
  
 class TutorialApplication : public BaseApplication
 {
@@ -24,13 +36,19 @@ protected:
   Ogre::ManualObject *createCubeMesh(Ogre::String name, Ogre::String matName);
  
 private:
+  CEGUI::OgreRenderer* mRenderer;
+  bool resetTargets(const CEGUI::EventArgs& e);
   void resetTargets();
-  bool randomize();
+  bool randomize(); 
+  double timeInt = 0;
   void defineTerrain(long x, long y);
   void processUnbufferedInput(const Ogre::FrameEvent& fe);
   bool fire = false;
   void initBlendMaps(Ogre::Terrain* terrain);
   void configureTerrainDefaults(Ogre::Light* light);
+  void getContactPairs(std::vector<contactPair> &contactPairs);
+  void handleCollisions(std::vector<contactPair> pairs);
+  ogreObject* getOgreObject(const btCollisionObject * obj);
   void createBulletSim(void);
   bool mTerrainsImported;
   Ogre::TerrainGroup* mTerrainGroup;
@@ -38,6 +56,7 @@ private:
  
   bool isDown = false;
   int numOfSpheres = 0;
+  int numOfCubes = 0;
   float power = 0;
   OgreBites::Label* mInfoLabel;
   btDefaultCollisionConfiguration* collisionConfiguration;
@@ -46,8 +65,18 @@ private:
   btSequentialImpulseConstraintSolver* solver;
   btDiscreteDynamicsWorld* dynamicsWorld;
   btCollisionShape* groundShape;
-  btAlignedObjectArray<btCollisionShape*> collisionShapes;
- 
+  btAlignedObjectArray<btCollisionShape*> collisionShapes; 
+  void addLocations();
+  void removeObject(ogreObject *object);
+  int itemsLeftOver = 0;
+  CEGUI::DefaultWindow *itemsLeft;
+  CEGUI::DefaultWindow *time;
+
+
+  std::vector<btVector3> targetLocations;
+  ogreObject* ptrToOgreObject;
+  std::vector<ogreObject *> ptrToOgreObjects;
+  std::vector<contactPair> contactPairs;
 };
  
 
