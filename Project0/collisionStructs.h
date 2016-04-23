@@ -51,6 +51,7 @@ struct ogreObject {
 	std::string objectType;
 	Ogre::Vector3 objectPosition;
 	bool objectDelete;
+	double timeAlive = 0;
 
 };
 

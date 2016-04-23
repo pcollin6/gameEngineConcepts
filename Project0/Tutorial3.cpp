@@ -48,6 +48,7 @@ void TutorialApplication::CreateSphere(const btVector3 &Position, btScalar Mass,
 	ptrToOgreObject->btCollisionObjectObject = ptrToOgreObject->btRigidBodyObject;
 	ptrToOgreObject->objectDelete = false;
 	ptrToOgreObject->objectType = name;
+	ptrToOgreObject->timeAlive = 0;
 	ptrToOgreObjects.push_back(ptrToOgreObject);
 
 	dynamicsWorld->addRigidBody(ptrToOgreObject->btRigidBodyObject);
@@ -61,7 +62,7 @@ void TutorialApplication::CreateSphere(const btVector3 &Position, btScalar Mass,
 
 	//Now as we discussed above, we want our vector to have a certain speed. We first normalize it, and then multiply it by Speed
 	FireVelocity.normalize();
-	FireVelocity *= 750;
+	FireVelocity *= (velocity * 100);
 
 	//Now we finally propel our box
 	ptrToOgreObject->btRigidBodyObject->setLinearVelocity(FireVelocity * 1);
@@ -240,11 +241,11 @@ void TutorialApplication::resetTargets() {
 	targetLocations.clear();
 	addLocations();
 	itemsLeftOver = 0;
+	createBulletSim();
 	char* targetsLeft = (char*)malloc(3 + strlen(" items left") + 1);
 	itoa(itemsLeftOver, targetsLeft, 10);
 	strcat(targetsLeft, " items left");
 	itemsLeft->setText(CEGUI::String(targetsLeft));
-	createBulletSim();
 }
 
 void TutorialApplication::removeObject(ogreObject *object) {
@@ -453,10 +454,16 @@ void TutorialApplication::destroyScene()
 
 bool TutorialApplication::frameStarted(const Ogre::FrameEvent &evt)
 {
-//	mKeyboard->capture();
-//	mMouse->capture();
-	// update physics simulation
-	//dynamicsWorld->stepSimulation(evt.timeSinceLastFrame,10);
+
+	for (int i = 0; i < ptrToOgreObjects.size(); i++){
+		if (ptrToOgreObjects[i]->objectType.substr(0, 10) == "Projectile"){
+			ptrToOgreObjects[i]->timeAlive += evt.timeSinceLastFrame;
+			if (ptrToOgreObjects[i]->timeAlive >= 5){
+				removeObject(ptrToOgreObjects[i]);
+			}
+		}
+	}
+
 	dynamicsWorld->stepSimulation(evt.timeSinceLastFrame);
 	return true;
 }
@@ -583,7 +590,7 @@ void TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent& fe){
 	}
 	if (mKeyboard->isKeyDown(OIS::KC_SPACE)){
 		fire = true;
-		power += (fe.timeSinceLastFrame * 4);
+		power += (fe.timeSinceLastFrame*4);
 	}
 	else if (!mKeyboard->isKeyDown(OIS::KC_SPACE) && fire){
 		fire = false;
