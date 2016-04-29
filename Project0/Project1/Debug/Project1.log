@@ -1,4 +1,4 @@
-﻿Build started 4/22/2016 10:57:27 PM.
+﻿Build started 4/29/2016 6:40:49 PM.
      1>Project "C:\Users\Aaron\Downloads\Files\College\Major\Game Engines\GitGE\gameEngineConcepts\Project0\Project1\Project1.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\OgreMain\Build9/include/OGRE/Overlay /IC:\OgreMain\Build9/include/OGRE /IC:\OgreMain\boost_1_60_0 /IC:\OgreMain\Build9/include/OIS /IC:\OgreMain\Build9/include /I"C:\OgreMain\bullet-2.82\src\/BulletCollision/CollisionShapes" /I"C:\OgreMain\bullet-2.82\src\\" /I"C:\OgreMain\bullet-2.82\src\/LinearMath" /I"C:\OgreMain\cegui\include\cegui-0\\" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Tutorial3.cpp
@@ -7,42 +7,44 @@
      1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(99): warning C4316: 'MyMotionState' : object allocated on the heap may not be aligned 16
      1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(86): warning C4101: 'e' : unreferenced local variable
      1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(198): warning C4305: 'argument' : truncation from 'double' to 'const btScalar'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(233): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(252): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(217): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(238): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(271): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(272): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(273): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(274): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(275): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(276): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(277): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(278): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(279): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(280): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(281): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(282): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(283): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(284): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
      1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(285): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
      1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(286): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
      1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(287): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
      1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(288): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
      1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(289): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
      1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(290): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(291): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(292): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(293): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(294): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(295): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(296): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(297): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(298): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(299): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(300): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(301): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(302): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(303): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(304): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(335): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(346): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(348): warning C4305: 'argument' : truncation from 'double' to 'const Ogre::Real'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(355): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(358): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(321): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(332): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(334): warning C4305: 'argument' : truncation from 'double' to 'const Ogre::Real'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(341): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(344): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(405): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(406): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(414): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(419): warning C4305: 'argument' : truncation from 'double' to 'float'
      1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(420): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(421): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(430): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(435): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(436): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(458): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(475): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(499): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(602): warning C4305: 'argument' : truncation from 'double' to 'const btScalar'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(424): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(425): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(448): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(465): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(490): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\aaron\downloads\files\college\major\game engines\gitge\gameengineconcepts\project0\tutorial3.cpp(601): warning C4305: 'argument' : truncation from 'double' to 'const btScalar'
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Aaron\Downloads\Files\College\Major\Game Engines\GitGE\gameEngineConcepts\Project0\Debug\Project1.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\OgreMain\boost_1_60_0\lib /LIBPATH:C:\OgreMain\Build9\lib/debug /LIBPATH:"C:\OgreMain\bullet-2.82\lib\\" /LIBPATH:C:\OgreMain\cegui\lib\ OgreMain_d.lib OgreOverlay_d.lib OIS_d.lib OgreTerrain_d.lib BulletCollision_vs2010_debug.lib BulletDynamics_vs2010_debug.lib BulletSoftBody_vs2010_debug.lib ConvexDecomposition_vs2010_debug.lib BulletSoftBodyDX11Solvers_vs2010_debug.lib HACD_vs2010_debug.lib LinearMath_vs2010_debug.lib "CEGUIBase-0_d.lib" "CEGUIOgreRenderer-0_d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Aaron\Downloads\Files\College\Major\Game Engines\GitGE\gameEngineConcepts\Project0\Debug\Project1.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Aaron\Downloads\Files\College\Major\Game Engines\GitGE\gameEngineConcepts\Project0\Debug\Project1.lib" /MACHINE:X86 Debug\BaseApplication.obj
          Debug\Tutorial3.obj
@@ -55,4 +57,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:37.87
+Time Elapsed 00:00:30.05

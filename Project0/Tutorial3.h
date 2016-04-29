@@ -37,7 +37,6 @@ protected:
  
 private:
   CEGUI::OgreRenderer* mRenderer;
-  bool resetTargets(const CEGUI::EventArgs& e);
   void resetTargets();
   bool randomize(); 
   double timeInt = 0;
@@ -71,6 +70,8 @@ private:
   int itemsLeftOver = 0;
   CEGUI::DefaultWindow *itemsLeft;
   CEGUI::DefaultWindow *time;
+  CEGUI::DefaultWindow *pointsWindow;
+  int points = 0;
 
 
   std::vector<btVector3> targetLocations;

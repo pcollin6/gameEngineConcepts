@@ -213,22 +213,6 @@ bool TutorialApplication::randomize() {
 
 }
 
-bool TutorialApplication::resetTargets(const CEGUI::EventArgs& e) {
-	int count = ptrToOgreObjects.size();
-	for (int i = 0; i < count; i++){
-		removeObject(ptrToOgreObjects[i]);
-	}
-	numOfCubes = 0;
-	numOfSpheres = 0;
-	collisionShapes.clear();
-	delete dynamicsWorld;
-	targetLocations.clear();
-	addLocations();
-	itemsLeftOver = 0;
-	createBulletSim();
-	return true;
-}
-
 void TutorialApplication::resetTargets() {
 	for (int i = 0; i < ptrToOgreObjects.size(); i++){
 		removeObject(ptrToOgreObjects[i]);
@@ -241,6 +225,8 @@ void TutorialApplication::resetTargets() {
 	targetLocations.clear();
 	addLocations();
 	itemsLeftOver = 0;
+	timeInt = 0;
+	points = 0;
 	createBulletSim();
 	char* targetsLeft = (char*)malloc(3 + strlen(" items left") + 1);
 	itoa(itemsLeftOver, targetsLeft, 10);
@@ -410,7 +396,6 @@ void TutorialApplication::createScene()
   CEGUI::WindowManager::setDefaultResourceGroup("Layouts");
 
   CEGUI::SchemeManager::getSingleton().createFromFile("TaharezLook.scheme");
-  CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setDefaultImage("TaharezLook/MouseArrow");
 
   CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
   CEGUI::Window *sheet = wmgr.createWindow("DefaultWindow", "CEGUIDemo/Sheet");
@@ -419,7 +404,6 @@ void TutorialApplication::createScene()
   Rebuild->setText("Y To Restart");
   Rebuild->setSize(CEGUI::USize(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05, 0)));
   Rebuild->setPosition(CEGUI::UVector2(CEGUI::UDim(0, 0), CEGUI::UDim(0.10, 0)));
-  Rebuild->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&TutorialApplication::resetTargets, this));
 
   //Creates the textbox for the program
   itemsLeft = (CEGUI::DefaultWindow*)wmgr.createWindow("TaharezLook/Editbox"); 
@@ -435,9 +419,15 @@ void TutorialApplication::createScene()
   time->setSize(CEGUI::USize(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05, 0)));
   time->setPosition(CEGUI::UVector2(CEGUI::UDim(0, 0), CEGUI::UDim(0.05, 0)));
 
+  pointsWindow = (CEGUI::DefaultWindow*)wmgr.createWindow("TaharezLook/Editbox");
+  pointsWindow->setText("0 Points");
+  pointsWindow->setSize(CEGUI::USize(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05, 0)));
+  pointsWindow->setPosition(CEGUI::UVector2(CEGUI::UDim(0.4, 0), CEGUI::UDim(0, 0)));
+
   sheet->addChild(Rebuild);
   sheet->addChild(itemsLeft);
   sheet->addChild(time);
+  sheet->addChild(pointsWindow);
   CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(sheet);
 }
  
@@ -478,6 +468,7 @@ void TutorialApplication::handleCollisions(std::vector<contactPair> pairs){
 			i--;
 		}
 		else{
+			points += 500;
 			removeObject(pairs[i].ptrToOgreObject1);
 			removeObject(pairs[i].ptrToOgreObject2);
 			char* targetsLeft = (char*)malloc(3 + strlen(" items left") + 1);
@@ -564,11 +555,13 @@ void TutorialApplication::getContactPairs(std::vector<contactPair> &contactPairs
 bool TutorialApplication::frameRenderingQueued(const Ogre::FrameEvent& fe)
 {
   bool ret = BaseApplication::frameRenderingQueued(fe);
-  timeInt += fe.timeSinceLastFrame;
-  std::ostringstream ss;
-  ss << timeInt;
-  std::string str = ss.str();
-  time->setText(CEGUI::String(str.c_str()));
+  if (itemsLeftOver > 0){
+	  timeInt += fe.timeSinceLastFrame;
+	  std::ostringstream ss;
+	  ss << timeInt;
+	  std::string str = ss.str();
+	  time->setText(CEGUI::String(str.c_str()));
+  }
 
   // this should hold collision information, is this in the right place?
   getContactPairs(contactPairs);
@@ -576,6 +569,11 @@ bool TutorialApplication::frameRenderingQueued(const Ogre::FrameEvent& fe)
   handleCollisions(contactPairs);
 
   processUnbufferedInput(fe);
+
+  char *pointsVal = (char*)malloc(10 + strlen(" Points"));
+  itoa(points, pointsVal, 10);
+  strcat(pointsVal, " Points");
+  pointsWindow->setText(CEGUI::String(pointsVal));
 
   return ret;
 }
@@ -593,7 +591,8 @@ void TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent& fe){
 		power += (fe.timeSinceLastFrame*4);
 	}
 	else if (!mKeyboard->isKeyDown(OIS::KC_SPACE) && fire){
-		fire = false;
+		fire = false; 
+		points -= 50;
 		char *projNum = (char*)malloc(3);
 		itoa(numOfSpheres, projNum, 10);
 		char *projName = (char*)malloc(strlen(projNum) + strlen("Projectile") + 1);
