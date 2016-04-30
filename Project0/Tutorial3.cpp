@@ -202,10 +202,6 @@ void TutorialApplication::createBulletSim(void) {
   }
 
 btVector3 TutorialApplication::sizeRandomize() {
-	/*double min = 0.05;
-	double max = 0.5;
-	double f = (double)rand() / RAND_MAX;
-	return min + f * (max - min);*/
 	std::random_device seeder;
 	std::mt19937 engine(seeder());
 	std::uniform_int_distribution<int> dist(0, 4);
@@ -321,9 +317,9 @@ void TutorialApplication::addSizes() {
 }
 
 void TutorialApplication::addLocations(){
-	targetLocations.push_back(btVector3(2263, 30, 1800));
-	targetLocations.push_back(btVector3(2383, 30, 1900));
-	targetLocations.push_back(btVector3(2163, 30, 1950));
+	targetLocations.push_back(btVector3(1500, 30, 1800)); // right of camera
+	targetLocations.push_back(btVector3(1150, 90, 1650)); // behind camera
+	targetLocations.push_back(btVector3(1500, 60, 1200)); // left of camera
 	targetLocations.push_back(btVector3(2000, 30, 1880));
 	targetLocations.push_back(btVector3(2200, 30, 1700));
 	targetLocations.push_back(btVector3(2100, 30, 1500));
