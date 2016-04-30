@@ -38,7 +38,8 @@ protected:
 private:
   CEGUI::OgreRenderer* mRenderer;
   void resetTargets();
-  bool randomize(); 
+  bool randomize();
+  btVector3 sizeRandomize();
   double timeInt = 0;
   void defineTerrain(long x, long y);
   void processUnbufferedInput(const Ogre::FrameEvent& fe);
@@ -66,6 +67,7 @@ private:
   btCollisionShape* groundShape;
   btAlignedObjectArray<btCollisionShape*> collisionShapes; 
   void addLocations();
+  void addSizes();
   void removeObject(ogreObject *object);
   int itemsLeftOver = 0;
   CEGUI::DefaultWindow *itemsLeft;
@@ -78,6 +80,7 @@ private:
   ogreObject* ptrToOgreObject;
   std::vector<ogreObject *> ptrToOgreObjects;
   std::vector<contactPair> contactPairs;
+  std::vector<btVector3> sizes;
 };
  
 

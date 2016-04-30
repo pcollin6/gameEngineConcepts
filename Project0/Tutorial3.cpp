@@ -195,11 +195,23 @@ void TutorialApplication::createBulletSim(void) {
 		int locationIndex = std::rand() % (targetLocations.size());
 		btVector3 location = targetLocations[locationIndex];
 		targetLocations.erase(targetLocations.begin() + locationIndex);
-		CreateCube(location, 1.0f, btVector3(0.2, 0.2, 0.2), cubeName, randomize());
+		CreateCube(location, 1.0f, sizeRandomize(), cubeName, randomize());
 		itemsLeftOver++;
 		numOfCubes++;
 	}
   }
+
+btVector3 TutorialApplication::sizeRandomize() {
+	/*double min = 0.05;
+	double max = 0.5;
+	double f = (double)rand() / RAND_MAX;
+	return min + f * (max - min);*/
+	std::random_device seeder;
+	std::mt19937 engine(seeder());
+	std::uniform_int_distribution<int> dist(0, 4);
+	int randNum = dist(engine);
+	return sizes[randNum];
+}
 
 bool TutorialApplication::randomize() {
 	std::random_device seeder;
@@ -300,6 +312,14 @@ Ogre::ManualObject* TutorialApplication::createCubeMesh(Ogre::String name, Ogre:
 	return cube;
 }
 
+void TutorialApplication::addSizes() {
+	sizes.push_back(btVector3(0.1, 0.1, 0.1));
+	sizes.push_back(btVector3(0.5, 0.5, 0.5));
+	sizes.push_back(btVector3(0.1, 0.5, 0.5));
+	sizes.push_back(btVector3(0.5, 0.1, 0.5));
+	sizes.push_back(btVector3(0.2, 0.3, 0.2));
+}
+
 void TutorialApplication::addLocations(){
 	targetLocations.push_back(btVector3(2263, 30, 1800));
 	targetLocations.push_back(btVector3(2383, 30, 1900));
@@ -315,6 +335,7 @@ void TutorialApplication::addLocations(){
 void TutorialApplication::createScene()
 {
   addLocations();
+  addSizes();
 
   mCamera->setPosition(Ogre::Vector3(1500, 30, 1650));
   mCamera->lookAt(Ogre::Vector3(1963, 30, 1685));
