@@ -324,7 +324,7 @@ void TutorialApplication::addLocations(){
 	targetLocations.push_back(btVector3(2200, 30, 1700));
 	targetLocations.push_back(btVector3(2100, 30, 1500));
 	targetLocations.push_back(btVector3(2400, 30, 1550));
-	targetLocations.push_back(btVector3(2450, 30, 1975));
+	targetLocations.push_back(btVector3(3500, 200, 1975));
 	targetLocations.push_back(btVector3(2263, 30, 2000));
 }
 
@@ -474,8 +474,6 @@ bool TutorialApplication::frameStarted(const Ogre::FrameEvent &evt)
 	dynamicsWorld->stepSimulation(evt.timeSinceLastFrame);
 	return true;
 }
-
-
 
 void TutorialApplication::handleCollisions(std::vector<contactPair> pairs){
 
