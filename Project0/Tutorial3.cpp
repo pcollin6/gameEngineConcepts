@@ -399,7 +399,7 @@ void TutorialApplication::createScene()
   mSceneMgr->setSkyDome(true, "Examples/CloudySky", 5, 8);
 
 
-  mCamera2->setPosition(Ogre::Vector3(1963, 800, 1660));
+  mCamera2->setPosition(Ogre::Vector3(1500, 1000, 1650));
   mCamera2->pitch(Ogre::Radian(4.71F));
   mCamera2->rotate(Ogre::Vector3::NEGATIVE_UNIT_Y, Ogre::Degree(90.0f));
   createBulletSim();
