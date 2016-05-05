@@ -23,6 +23,7 @@ void TutorialApplication::CreateSphere(const btVector3 &Position, btScalar Mass,
 	pos.z = Position.getZ();
 	ptrToOgreObject->entityObject = mSceneMgr->createEntity(name, "sphere.mesh");
 	ptrToOgreObject->entityObject->setCastShadows(true);
+	ptrToOgreObject->entityObject->setMaterialName("Examples/SphereMappedRustySteel");
 
 	ptrToOgreObject->sceneNodeObject = mSceneMgr->getRootSceneNode()->createChildSceneNode(name);
 	ptrToOgreObject->sceneNodeObject->attachObject(ptrToOgreObject->entityObject);
@@ -80,6 +81,7 @@ void TutorialApplication::CreateCube(const btVector3 &Position, btScalar Mass, c
 	pos.z = Position.getZ();
 	ptrToOgreObject->entityObject = mSceneMgr->createEntity(name, "cube.mesh");
 	ptrToOgreObject->entityObject->setCastShadows(true);
+	ptrToOgreObject->entityObject->setMaterialName("Examples/Rocky");
 	try{
 		ptrToOgreObject->sceneNodeObject = mSceneMgr->getSceneNode(name);
 	}
@@ -479,11 +481,22 @@ void TutorialApplication::handleCollisions(std::vector<contactPair> pairs){
 
 	for (int i = 0; i < pairs.size(); i++) {
 		if (!((pairs[i].ptrToOgreObject1->objectType.substr(0, 10) == "Projectile" && pairs[i].ptrToOgreObject2->objectType.substr(0, 4) == "Cube") || (pairs[i].ptrToOgreObject2->objectType.substr(0, 10) == "Projectile" && pairs[i].ptrToOgreObject1->objectType.substr(0, 4) == "Cube"))) {
+			if (pairs[i].ptrToOgreObject1->objectType.substr(0, 10) == "Projectile"){
+				pairs[i].ptrToOgreObject1->bounced = true;
+			}
+			else if (pairs[i].ptrToOgreObject2->objectType.substr(0, 10) == "Projectile"){
+				pairs[i].ptrToOgreObject1->bounced = true;
+			}
 			pairs.erase(pairs.begin() + i);
 			i--;
 		}
 		else{
-			points += 500;
+			if (pairs[i].ptrToOgreObject1->bounced || pairs[i].ptrToOgreObject2->bounced){
+				points += 300;
+			}
+			else{
+				points += 500;
+			}
 			removeObject(pairs[i].ptrToOgreObject1);
 			removeObject(pairs[i].ptrToOgreObject2);
 			char* targetsLeft = (char*)malloc(3 + strlen(" items left") + 1);
